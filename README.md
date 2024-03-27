@@ -1,3 +1,3 @@
 # LUCOM
-Lucom Events 
+IMMUNITRIX 
 https://lucom.vercel.app/login.html
