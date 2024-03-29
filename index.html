@@ -597,6 +597,7 @@ location.href = "login.html";
 }
 else {
 $comm = comm;
+
 let $user = data[0]; 
 let pic = xqlfile + $user['pic'];
 let email = $user['email'];
@@ -651,7 +652,7 @@ inText('#username', name);
 inHTML('#check', check);
 inText('#clear', clear);    
 }  
-
+timeLine();
 }
 
 
@@ -702,7 +703,7 @@ const nswipe = document.getElementById('swiper');
 
 
 let tline = false; 
-timeLine(); 
+
 function timeLine(mode, find) {
 if(mode !== undefined) {
 tline = true; 
