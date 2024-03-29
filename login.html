@@ -102,7 +102,7 @@ let uner = document.getElementById('names').value;
 let passw = document.getElementById('password').value;
 let phone = document.getElementById('phone').value;
 let newid = makeid(8);  
-$INSERT($db, `INSERT users FIELDS(id, username, phone, password, email) VALUES(${newid}, ${uner}, ${phone}, ${passw}, ${email})`, `sign('${newid}')`); 
+$INSERT($db, `INSERT users FIELDS(id, username, phone, password, email, pic) VALUES(${newid}, ${uner}, ${phone}, ${passw}, ${email}, )`, `sign('${newid}')`); 
     
 
  
