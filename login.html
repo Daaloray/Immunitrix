@@ -113,12 +113,14 @@ $INSERT($db, `INSERT users FIELDS(id, username, phone, password, email) VALUES($
  
     
 } else  {
-    
+ try {    
 document.getElementById('error').innerText = 'Processing...'; 
 let uname = document.getElementById('names').value; 
 
 $QUERY($con, $db, `SELECT users WHERE username = '${uname}'`).pull(check);
-
+ } catch(err) {
+  alert(err); 
+ }
 function check(data) {
  
     try {
