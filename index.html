@@ -12,12 +12,9 @@
 <meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <title>Lucom Events</title>
-<link rel="stylesheet" href="xql/hex.css">
-<link rel="stylesheet" href="./media.css">
-<script src="xql/xcon.js"></script>
-<script src="xql/hex.js?v=cpopop"></script>
-<script src="xql/query.js"></script>
-<script src="xql/que.js?v=jo11bs"></script>
+<script src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/hex.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/que.js"></script>
+<link rel="stylesheet" href="https://immunitrix.vercel.app/media.css">
 </head>
 <body>
 <style>
@@ -335,7 +332,7 @@ hide('#copied');
 
 </div>
 
-<button id="add" noborder radius="50%" width="63px" height="63px" color="white" font="Outfit" size="25px" absolut push="right" margin="10px right" class="btn" back="#055576"><i class="fa fa-plus"></i></button>
+<button onclick="show('#push');" id="add" noborder radius="50%" width="63px" height="63px" color="white" font="Outfit" size="25px" absolut push="right" margin="10px right" class="btn" back="#055576"><i class="fa fa-plus"></i></button>
 </div>
 
 
@@ -429,13 +426,13 @@ $bio
 
 
 
-<di id="loa" class="loa">1 
+<div id="load" class="load"> 
  
-<di page-middle>
- <im src="asset/loader.gif" widt="120px">   
-</di>
+<div page-middle>
+ <img src="asset/loader.gif" width="120px">   
+</div>
  
-</di>
+</div>
 
 
 
@@ -447,7 +444,10 @@ $bio
 <div id="latest">
 <div id="cards"  margin="10px bottom" relative theme="smart" page-middle-h  radius="5px">
 <div back="white" padding="12px" radius="0 5px 0 5px" absolute push="top right">$date<br><size bold opacity="0.7" down="2">$time</size></div>
-<img src="$img" noselect width="100%" ratio="3/2.6">
+<div flex style="align-items: center" absolute push="left">
+<img src="$pic" width="30px" round height="30px" id="userimg">&nbsp;&nbsp;<p bold size="17px">$pname</p>&nbsp;&nbsp;&nbsp;$check
+</div>
+<img margin="40px top" src="$img" noselect width="100%" ratio="3/2.6">
 <div relative flex style="align-items: center;" width="100%"><p style="word-wrap: wrap; max-width: 70%" bold="2" font="Rubik" size="18px">$name</p>&nbsp;&nbsp;<button onclick="hexPop('$id'); openPop()" absolute push="right" theme="smart" width="auto">View ></button>
 </div>
 
@@ -512,7 +512,7 @@ $bio
 <br><br>
 <input use="dummy" type="file" hidden id="filen">
 <input name="pic" hidden id="filenn">
-<input style="pointer-events: none; background: rgba(0,0,0,0.1)" name="matric" id="smat" class="inp">
+<input style="pointer-events: none; background: rgba(0,0,0,0.1)" name="phone" id="smat" class="inp">
 
 <input style="z-index: 9;" index="9" name="name" id="sname" class="inp" placeholder="Display Name...">
 
@@ -555,58 +555,63 @@ $bio
 <br><br><br><br>
 
 <script>
+
+
 $IMPORT('@UI'); 
 const $con = "IiTkoYgn4IMbArj7JtAw"; 
 const $db = "lucom";
 let $email = []; 
 let $share = [];
+let $comm = [];
 $START('XQL:'+$con); 
 let user = localStorage.getItem('lucom');
+console.log(user)
 if(user == null) {
 
-document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    } 
-document.getElementById('admin').onclick = function(){
-    hexPop('permit');
-    } 
-    
-    
-} else {
-document.getElementById('add').onclick = function(){
-    show('#push');
-    }
+location.href = "login.html"; 
+} 
 
 document.getElementById('admin').onclick = function(){
-location.href = "admin.html"; 
-    } 
+location.href = "admin.html"; } 
+
+
+
+function imgEdit() {
+let elem = document.querySelectorAll('#userimg');
+ elem.forEach(function(img){
+img.onerror = function() {
+this.src = "https://immunitrix.vercel.app/asset/default.jpeg"; 
+ }
+ });
+
+}
+
+setInterval(imgEdit, 1000)
     
     
 $QUERY($con, $db, `SELECT users WHERE id = '${user}'`).pull(curr); 
-function curr(data) {
-if(data == "") {
-document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    } 
+function curr(comm) {
+let data = comm.filter(item => item['id'] == user);
+if(!data && !data[0]){
+location.href = "login.html"; 
 }
 else {
+$comm = comm;
 let $user = data[0]; 
 let pic = xqlfile + $user['pic'];
 let email = $user['email'];
 inValue('#semail', email); 
 
 $email.push(email);
-let name = $user['name'];
+let name = $user['username'];
     if(name == undefined  || name == "undefined") {
     name = ""; 
     }
 inValue('#sname', name); 
-inValue('#smat', $user['matric']); 
+inValue('#smat', $user['phone']); 
 inValue('#filenn', $user['file']);
 
-if(name == "" || name == "null" || name == null) {
-name = $user['matric'];
-}
+
 let userid = $user['id']; 
 let level = $user['level'];
 let check = "";
@@ -622,9 +627,7 @@ clear = "Representative";
 }
 
 if(level == "1" || level == null || level == undefined || level == "null") {
-    document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    }
+    
     
     document.getElementById('admin').onclick = function(){
     hexPop('permit');
@@ -651,7 +654,7 @@ inText('#clear', clear);
 
 }
 
-}
+
 
 
 function fileUp() {
@@ -719,6 +722,7 @@ $QUERY($con, $db, `SELECT events`).pull(allEvents);
 
 let $data = ""; 
 async function allEvents(data) {
+
 try {
 let others = false; 
 
@@ -726,11 +730,37 @@ let count = 0;
 for(const row of data) {
 count++; 
 let rid = row['id'];
+let poster = row['userid']; 
+poster = $comm.filter(item => item['id'] == poster); 
+poster = poster[0]; 
+let pimm = poster['pic']; 
+row['pname'] = poster['username']; 
+let level= poster['level']; 
+let check = ""; 
+if(level == "dev") {
+check = '<i class="blue-tick" style="color: gold"></i>'; 
+}
+
+if(level == "2") {
+check = '<i class="blue-tick" style="color: blue"></i>';
+}
+
+row['check'] = check; 
+
+
+
+if(pimm == "" || pimm == null || pimm == undefined){
+row['pic']  = `https://immunitrix.vercel.app/asset/default.jpeg`;  
+} else {
+row['pic'] = xqlfile + pimm;  
+}
+
 row['pop'] = `pop="${rid} CLOSE"`; 
 row['img'] = xqlfile + row['file']; 
 await $QUERY($con, $db, `SELECT like COUNT revid = '${rid}'`).pull(facto);
 
 function facto(lco) {
+
 liker = lco;
 row['trend'] = lco;
 let currname = localStorage.getItem('lucom');
@@ -746,6 +776,7 @@ setRol(liker, color);
 }   
     
 function setRol(liker, col) {
+
 row['col'] = col; 
 row['liker'] = liker; 
 row['img'] = xqlfile + row['file'];
@@ -832,7 +863,7 @@ hide('#load');
 
 }
 } catch(error) {
-    alert(error)
+    alert("15"+error)
 }
 
 
@@ -935,7 +966,7 @@ row['img'] = xqlfile + row['file'];
 function sort() {
 data = $sort(data).by('trend', 'DESC');
 
-let enter = loop(data, popu, '3');
+let enter = loop(data, popu);
 strend.innerHTML = enter;
 
 
@@ -981,7 +1012,7 @@ swiper();
 
 }    
 } catch(error) {
-alert(error);
+alert("20"+error);
 }  
 }
 
