@@ -589,7 +589,7 @@ this.src = "https://immunitrix.vercel.app/asset/default.jpeg";
 setInterval(imgEdit, 1000)
     
     
-$QUERY($con, $db, `SELECT users WHERE id = '${user}'`).pull(curr); 
+$QUERY($con, $db, `SELECT users`).pull(curr); 
 function curr(comm) {
 let data = comm.filter(item => item['id'] == user);
 if(!data && !data[0]){
