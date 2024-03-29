@@ -733,6 +733,7 @@ count++;
 let rid = row['id'];
 let poster = row['userid']; 
 poster = $comm.filter(item => item['id'] == poster); 
+if(poster){
 poster = poster[0]; 
 let pimm = poster['pic']; 
 row['pname'] = poster['username']; 
@@ -755,6 +756,7 @@ row['pic']  = `https://immunitrix.vercel.app/asset/default.jpeg`;
 } else {
 row['pic'] = xqlfile + pimm;  
 }
+
 
 row['pop'] = `pop="${rid} CLOSE"`; 
 row['img'] = xqlfile + row['file']; 
@@ -861,7 +863,7 @@ hide('#load');
 }
 
 
-
+} else { hide('#load'); }
 }
 } catch(error) {
     alert("15"+error)
