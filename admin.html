@@ -12,11 +12,9 @@
 <meta property="og:type" content="website"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <title>Lucom Events</title>
-<link rel="stylesheet" href="xql/hex.css">
-<script src="xql/xcon.js"></script>
-<script src="xql/hex.js?v=econd"></script>
-<script src="xql/query.js"></script>
-<script src="xql/que.js?v=jo11bs"></script>
+<script src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/hex.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/HexxeJS/HexxeDB/que.js"></script>
+
 </head>
 <body>
 <style>
@@ -207,23 +205,15 @@ $START('XQL:'+$con);
 let user = localStorage.getItem('lucom');
 if(user == null) {
 
-document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    } 
+location.href = "login.html"; 
     
-    
-} else {
-document.getElementById('add').onclick = function(){
-    show('#push');
-    }
+} 
 
     
 $QUERY($con, $db, `SELECT users WHERE id = '${user}'`).pull(curr); 
 function curr(data) {
 if(data == "") {
-document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    } 
+location.href = "login.html";
 }
 else {
 let $user = data[0]; 
@@ -234,7 +224,7 @@ $email.push(email);
 let name = $user['name'];
 
 if(name == "" || name == "null" || name == null) {
-name = $user['matric'];
+name = $user['username'];
 }
 let userid = $user['id']; 
 let level = $user['level'];
@@ -251,9 +241,6 @@ clear = "Representative";
 }
 
 if(level == "1" || level == null || level == undefined || level == "null") {
-    document.getElementById('add').onclick = function(){
-    hexPop('permit');
-    }
     
     
     
@@ -277,7 +264,7 @@ inText('#clear', clear);
 
 }
 
-}
+
 
 
 const scant = document.getElementById('feed'); 
