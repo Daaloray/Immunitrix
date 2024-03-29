@@ -166,7 +166,7 @@ content: "";
 <textarea id="ebio" height="200px" placeholder="Event Description..." name="bio" class="inp"></textarea>
 
 <input hidden use="dummy" type="file" id="filen" class="updd" accept="image/*">
-<input id="filenn" name="file" hidde>
+<input id="filenn" name="file" hidden>
 <div flex relative style="align-items: center">
 <img radius="7px" class="upimg" id="proff" onclick="fileUp(); document.getElementById('filen').click();" src="asset/create.jpg" style="width: 50%;">
 
@@ -295,6 +295,7 @@ inValue('#edate', row['date']);
 inValue('#etime', row['time']); 
 inValue('#ebio', row['bio']); 
 inValue('#filenn', row['file']); 
+document.getElementById('proff').src = xqlfile + row['file']; 
 
 
     
