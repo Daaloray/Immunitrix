@@ -78,10 +78,9 @@ background-color: rgb(8, 94, 68);
 <br>
 <span>
 <input type="text" id="names" class="inp" placeholder="Username">
-<input type="number" id="matric" class="inp" placeholder="Phone Number">
 <input style="margin-top: 10px;" type="password" id="password" class="inp" placeholder="Password">
 <input hidden margin="10px top" type="email" id="email" class="inp" placeholder="Email Address">
-
+<input hidden type="number" id="phone" class="inp" placeholder="Phone Number">
 </span>
 <p id="error" margin="4px,auto,0,auto" color="red" size="15px" font="Poppins"></p>
 <p 
@@ -103,17 +102,12 @@ function auth() {
 let email = document.getElementById('email').value; 
 if(email !== "") {
 document.getElementById('error').innerText = 'Creating Account...'; 
- 
-$QUERY($con, $db, `SELECT users WHERE Key = 'last'`).pull(prev);
- 
-function prev(last) {
+let uner = document.getElementById('names').value;
 let passw = document.getElementById('password').value;
-let mat = document.getElementById('matric').value; 
-let lastid = last[0]['id']; 
-let newid = parseInt(lastid) + 1; 
-$INSERT($db, `INSERT users FIELDS(id, matric, password, email) VALUES(${newid}, ${mat}, ${passw}, ${email})`, `sign('${newid}')`); 
+let phone = document.getElementById('phone').value;
+let newid = makeid(8);  
+$INSERT($db, `INSERT users FIELDS(id, username, phone, password, email) VALUES(${newid}, ${uner}, ${phone}, ${passw}, ${email})`, `sign('${newid}')`); 
     
-}
 
  
  
@@ -121,9 +115,9 @@ $INSERT($db, `INSERT users FIELDS(id, matric, password, email) VALUES(${newid}, 
 } else  {
     
 document.getElementById('error').innerText = 'Processing...'; 
-let matric = document.getElementById('matric').value; 
+let uname = document.getElementById('names').value; 
 
-$QUERY($con, $db, `SELECT users WHERE matric = '${matric}'`).pull(check);
+$QUERY($con, $db, `SELECT users WHERE username = '${uname}'`).pull(check);
 
 function check(data) {
  
@@ -134,6 +128,8 @@ if(data == "")  {
 document.getElementById('error').innerText = 'Create Account';
 
 document.getElementById('email').style.display = 'block'; 
+document.getElementById('phone').style.display = 'block'; 
+ 
  
  
 } else {
